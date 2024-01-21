@@ -5,6 +5,7 @@ interface IStop {
     order: number,
     stop: 'string'
     time: 'string'
+    [key: string]: string | number;
 }
 
 interface IBackendResponse {
