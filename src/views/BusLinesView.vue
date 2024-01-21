@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { useStore } from "vuex";
 import IntrvwDataInline from "@/components/IntrvwDataInline.vue";
 import IntrvwDataList from "@/components/IntrvwDataList.vue";
+import IntrvwSortBtn from "@/components/IntrvwSortBtn.vue";
+import { TEXTS } from "@/enums/language.enum";
+
 const store = useStore();
 const lines = computed(() => store.state.lines);
 const selectedLine = computed(() => store.state.selectedLine);
@@ -11,31 +14,18 @@ const stops = computed(() => store.getters.sortedStopsByLine);
 const times = computed(() => store.getters.times);
 const stopsPlaceholder = computed(() => {
   if (!selectedLine.value) {
-    return 'Please select the bus line first'
+    return TEXTS.PLEASE_SELECT_BUS_LINE
   } else {
     return ''
   }
 })
 const timesPlaceholder = computed(() => {
   if (!selectedLine.value) {
-    return 'Please select the bus line first'
+    return TEXTS.PLEASE_SELECT_BUS_LINE
   } else if (!selectedStop.value) {
-    return 'Please select the bus stop first'
+    return TEXTS.PLEASE_SELECT_STOP
   } else {
     return ''
-  }
-})
-const sortIcon = computed(() => {
-  switch(store.state.stopsSortingOrderOnBuses) {
-    case 1: {
-      return 'icon-sort-up';
-    }
-    case -1: {
-      return 'icon-sort-down';
-    }
-    default: {
-      return 'icon-sort';
-    }
   }
 })
 const onLineChange = (line) => {
@@ -46,37 +36,30 @@ const onStopChange = (stop) => {
   const _stop = stop !== selectedStop.value ? stop : undefined;
   store.dispatch('setSelectedStop', _stop)
 };
-const onSortChange = () => {
-  let stopsSortingOrder = store.state.stopsSortingOrderOnBuses;
-  switch(store.state.stopsSortingOrderOnBuses) {
-    case 0: { stopsSortingOrder = 1; break; }
-    case 1: { stopsSortingOrder = -1; break; }
-    case -1: { stopsSortingOrder = 0; break; }
-    default: { stopsSortingOrder = 0 }
-  }
-  store.dispatch('setStopsSortingOrderOnBuses', stopsSortingOrder);
+const onSortChange = (newSortValue) => {
+  store.dispatch('setStopsSortingOrderOnBuses', newSortValue);
 }
 
 </script>
 <template>
   <div class="bus-lines">
-    <intrvw-data-inline :modelValue="selectedLine" @update:modelValue="onLineChange($event)" :title="'Select Bus Line'" :items="lines"></intrvw-data-inline>
+    <intrvw-data-inline :modelValue="selectedLine" @update:modelValue="onLineChange($event)" :title="TEXTS.SELECT_BUS_LINE" :items="lines"></intrvw-data-inline>
     <div class="bus-lines__data-container">
       <intrvw-data-list class="bus-lines__list" :modelValue="selectedStop" :selectable="true" :placeholder="stopsPlaceholder" @update:modelValue="onStopChange($event)" :items="stops">
         <template #title>
-          {{ `Bus Line: ${selectedLine}` }}
+          {{ `${TEXTS.BUS_LINE}: ${selectedLine}` }}
         </template>
         <template #subtitle>
-          {{ `Bus Stops` }} <i class="sort" :class="sortIcon" @click="onSortChange"></i>
+          {{ TEXTS.BUS_STOPS }} <intrvw-sort-btn :model-value="store.state.stopsSortingOrderOnBuses" @update:model-value="onSortChange"></intrvw-sort-btn>
         </template>
       </intrvw-data-list>
 
       <intrvw-data-list class="bus-lines__list" :placeholder="timesPlaceholder" :items="times">
         <template #title>
-          {{ `Bus Stop: ${selectedStop}` }}
+          {{ `${TEXTS.BUS_STOP}: ${selectedStop}` }}
         </template>
         <template #subtitle>
-          {{ `Time` }}
+          {{ TEXTS.TIME }}
         </template>
       </intrvw-data-list>
     </div>
@@ -84,18 +67,17 @@ const onSortChange = () => {
 </template>
 <style lang="scss">
 @import '../assets/scss';
-@import '../assets/scss/fonts';
 
 .bus-lines {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: $space-4;
   flex: 1 1 auto;
   height: 0;
   &__data-container {
     display: flex;
     flex: 1 1 auto;
-    gap: 16px;
+    gap: $space-4;
     @media (max-width: $breakpoint-mobile) {
       flex-direction: column;
     }
@@ -108,7 +90,7 @@ const onSortChange = () => {
   }
 }
 .sort {
-  font-size: 10px;
+  font-size: $font-size-xs;
   padding: 5px;
   color: $color-grey-3;
 }

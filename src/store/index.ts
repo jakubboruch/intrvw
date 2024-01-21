@@ -6,6 +6,10 @@ enum SPLIT_CHAR {
   COLON =':'
 }
 
+enum ERROR {
+  TIMEOUT = 10000
+}
+
 const sortStops = (stops: string[], sortState: number) => {
     return stops.slice().sort((stop1: string, stop2: string) => {
       if (sortState === 0) {
@@ -23,6 +27,8 @@ const sortStops = (stops: string[], sortState: number) => {
 }
 export default createStore({
   state: {
+    loading: false,
+    error: undefined,
     stops: [{}] as IStop[],
     lines: [] as string[],
     selectedLine: undefined,
@@ -56,6 +62,15 @@ export default createStore({
       state.stops = stops;
       state.lines = [ ...new Set(stops.map((stop: IStop) => stop.line))].sort() as string[]
     },
+    setLoadingState(state, loading) {
+      state.loading = loading;
+    },
+    setError(state, error) {
+      state.error = error;
+      setTimeout(() => {
+        state.error = undefined
+      }, ERROR.TIMEOUT)
+    },
     setStopsSortingOrderOnBuses(state, sorting) {
       state.stopsSortingOrderOnBuses = sorting;
     },
@@ -77,6 +92,12 @@ export default createStore({
     async getStopsFromApi(context) {
       const stops = await getStops();
       context.commit('mutateStops', stops);
+    },
+    setLoadingState(context, loading) {
+      context.commit('setLoadingState', loading);
+    },
+    setError(context, error) {
+      context.commit('setError', error);
     },
     setStopsSortingOrderOnBuses(context, payload) {
       context.commit('setStopsSortingOrderOnBuses', payload);

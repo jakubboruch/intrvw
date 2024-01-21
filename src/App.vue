@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { TEXTS } from "@/enums/language.enum";
+import type { IMenuItem } from "@/interfaces/menu";
+import IntrvwLoadingBar from "@/components/IntrvwLoadingBar.vue";
 import IntrvwMenu from "@/components/IntrvwMenu.vue";
+import IntrvwToast from "@/components/IntrvwToast.vue";
 
 const store = useStore();
-store.dispatch('getStopsFromApi');
+const loading = computed(() => store.state.loading);
+const error = computed(() => store.state.error);
+const menu: IMenuItem[] = [
+  { name: TEXTS.BUS_LINES, path: '/bus-lines' },
+  { name: TEXTS.STOPS, path: '/bus-stops' }
+];
 
-const menu = [{ name: 'Bus Lines', path: '/bus-lines' }, { name: 'Stops', path: '/bus-stops' }];
+store.dispatch('getStopsFromApi');
 
 </script>
 <template>
+  <intrvw-loading-bar v-if="loading"></intrvw-loading-bar>
+  <intrvw-toast v-if="error" :type="'error'">{{ error }}</intrvw-toast>
   <div class="timetable">
-    <h1>Timetable</h1>
-    <IntrvwMenu :init-active-path="menu?.[0].path" :menu-items="menu"></IntrvwMenu>
+    <h1>{{ TEXTS.TIMETABLE }}</h1>
+    <IntrvwMenu :menu-items="menu"></IntrvwMenu>
     <router-view></router-view>
   </div>
 </template>
@@ -24,8 +36,8 @@ html {
 body {
   box-sizing: border-box;
   background-color: $background-color !important;
-  padding: 40px 32px;
-  font-family: 'Inter', sans-serif;
+  padding: $space-10 $space-8;
+  font-family: $font-family;
   margin: 0;
   height: 100%;
 }
@@ -36,12 +48,12 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 16px;
+  gap: $space-4;
   h1 {
-    color: #1A1A1A;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 32px;
+    color: $color-text-1;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-lg;
     word-wrap: break-word;
     margin: 0;
     display: flex;

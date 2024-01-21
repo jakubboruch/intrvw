@@ -1,8 +1,5 @@
-<script setup lang="ts">
-</script>
 <template>
   <div class="intrvw-header">
-    <div class="intrvw-header__preheader"><slot name="preheader"></slot></div>
     <h3 class="intrvw-header__title"><slot></slot></h3>
   </div>
 </template>
@@ -12,12 +9,12 @@
 .intrvw-header {
   &__title {
     color: $color-text-1;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 24px;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-md;
     word-wrap: break-word;
-    padding-top: 24px;
-    padding-bottom: 8px;
+    padding-top: $space-6;
+    padding-bottom: $space-2;
     margin: 0;
   }
 }

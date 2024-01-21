@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import IntrvwHeader from "@/components/IntrvwHeader.vue";
 
 const props = withDefaults(
@@ -34,24 +33,24 @@ const onClickItem = (item: string) => {
 @import '../assets/scss';
 .intervw-data-inline {
   display: flex;
-  padding: 0 24px;
+  padding: 0 $space-6;
   background-color: $color-white;
-  border-radius: 4px;
+  border-radius: $border-radius-primary;
   flex-direction: column;
   &__content {
     display: flex;
-    gap: 8px;
+    gap: $space-2;
     flex-wrap: wrap;
-    padding: 24px 0;
+    padding: $space-6 0;
   }
   &__btn {
     border-radius: $border-radius-primary;
-    padding: 8px 16px;
+    padding: $space-2 $space-4;
     background-color: $color-primary;
     color: white;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-sm;
     word-wrap: break-word;
     border: none;
     cursor: pointer;

@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import IntrvwHeader from "@/components/IntrvwHeader.vue";
+
+enum TEXTS {
+  NO_RESULTS = 'No Results'
+}
 
 const props = withDefaults(
     defineProps<{
@@ -42,7 +45,7 @@ const onClickItem = (item: string) => {
       </li>
     </ul>
     <div class="intervw-data-list__no-results" v-if="items?.length === 0 && !placeholder">
-      {{ 'No results' }}
+      {{ TEXTS.NO_RESULTS }}
     </div>
   </section>
 </template>
@@ -55,7 +58,7 @@ const onClickItem = (item: string) => {
   flex: 1 1 auto;
   box-sizing: border-box;
   &--placeholder {
-    border-radius: 4px;
+    border-radius: $border-radius-primary;
     border: 2px $color-grey-3 dotted;
   }
   &__placeholder, &__no-results {
@@ -63,9 +66,9 @@ const onClickItem = (item: string) => {
     justify-content: center;
     align-items: center;
     flex: 1 1 auto;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+    line-height: $line-height-md;
     word-wrap: break-word;
     color: $color-grey-4;
     @media (max-width: $breakpoint-mobile) {
@@ -73,14 +76,14 @@ const onClickItem = (item: string) => {
     }
   }
   &__header {
-    padding: 0 24px;
+    padding: 0 $space-6;
     border-bottom: 1px solid $color-grey-1;
   }
   &__subtitle {
-    padding: 24px 0;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 16px;
+    padding: $space-6 0;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-sm;
     word-wrap: break-word
   }
   &__list {
@@ -96,20 +99,20 @@ const onClickItem = (item: string) => {
     }
   }
   &__item {
-    padding: 20px 24px;
+    padding: $space-5 $space-6;
     list-style: none;
     margin: 0;
     border-bottom: 1px solid $color-grey-1;
     color: $color-text-2;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
+    line-height: $line-height-sm;
     word-wrap: break-word;
     &--selectable {
       cursor: pointer;
       &:hover {
         background-color: $color-grey-2;
-        transition: 200ms background-color ease-in-out;
+        transition: $transition-base-time background-color $transition-base-ease;
       }
     }
     &--selected {

@@ -11,7 +11,7 @@ interface IBackendResponse {
     config: AxiosRequestConfig;
     data: IStop[];
     headers: AxiosRequestHeaders;
-    request: any;
+    request: XMLHttpRequest;
     status: number;
     statusText: string;
 }

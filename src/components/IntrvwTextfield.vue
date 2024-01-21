@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref, watch} from 'vue';
-import IntrvwHeader from "@/components/IntrvwHeader.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -36,7 +35,7 @@ watch(
 <template>
   <span class="intervw-textfield">
     <input class="intervw-textfield__field" :class="{'intervw-textfield__field--icon': icon}" type="text" v-model="localModelValue" @focus="focus = true" @blur="focus = false">
-    <span class="intervw-textfield__placeholder" v-if="placeholder && !focus">{{ placeholder }}</span>
+    <span class="intervw-textfield__placeholder" v-if="placeholder && !focus && !localModelValue">{{ placeholder }}</span>
     <span class="intervw-textfield__icon" :class="{'intervw-textfield__icon--focus': focus}">
       <i :class="icon"></i>
     </span>
@@ -44,24 +43,24 @@ watch(
 </template>
 <style lang="scss">
 @import '../assets/scss';
-@import '../assets/scss/fonts';
+@import '../assets/scss/iconfonts';
 .intervw-textfield {
   position: relative;
   display: inline-flex;
   &__field {
     background: none;
-    padding: 12px 16px;
-    line-height: 16px;
+    padding: $space-3 $space-4;
+    line-height: $line-height-sm;
     color: $color-text-1;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
     word-wrap: break-word;
     border: 1px solid $color-grey-1;
     border-radius: $border-radius-primary;
     min-width: 288px;
-    transition: 200ms border-color ease-in-out;
+    transition: $transition-base-time border-color $transition-base-ease;
     &--icon {
-      padding-right: 32px;
+      padding-right: $space-8;
     }
     &:focus {
       color: $color-text-1;
@@ -75,11 +74,11 @@ watch(
     width: 100%;
     height: 100%;
     pointer-events: none;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
     word-wrap: break-word;
     color: $color-grey-3;
-    padding: 0 16px;
+    padding: 0 $space-4;
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
@@ -87,7 +86,7 @@ watch(
   &__icon {
     pointer-events: none;
     position: absolute;
-    right: 16px;
+    right: $space-4;
     display: flex;
     height: 100%;
     align-items: center;

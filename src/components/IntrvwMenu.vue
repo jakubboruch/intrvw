@@ -1,14 +1,12 @@
 <script setup lang="ts">
-interface IMenuItem {
-  path: string;
-  name: string;
-}
-const props = withDefaults(
-    defineProps<{
-      menuItems: IMenuItem[],
-    }>(), {
-      menuItems: () => ([{}]),
-    });
+import type { IMenuItem } from "@/interfaces/menu";
+
+withDefaults(
+  defineProps<{
+    menuItems: IMenuItem[],
+  }>(), {
+    menuItems: () => ([]),
+  });
 
 </script>
 <template>
@@ -19,12 +17,12 @@ const props = withDefaults(
   </ul>
 </template>
 <style lang="scss">
-@import '../assets/scss/colors';
+@import '../assets/scss';
 .intervw-menu {
   display: flex;
-  padding: 0 24px;
+  padding: 0 $space-6;
   background-color: $color-white;
-  border-radius: 4px;
+  border-radius: $border-radius-primary;
   margin: 0;
   &__item {
     list-style: none;
@@ -33,20 +31,20 @@ const props = withDefaults(
   &__link {
     display: flex;
     text-decoration: none;
-    color: $color-link;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 24px;
-    padding: 20px 24px;
+    color: $color-grey-3;
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-md;
+    padding: $space-5 $space-6;
     word-wrap: break-word;
     border-bottom: 1px solid transparent;
-    transition: 200ms color ease-in-out;
+    transition: $transition-base-time color $transition-base-ease;
     &:hover {
-      color: $color-link-active;
+      color: $color-text-2;
     }
     &--active {
       border-bottom-color: $color-primary;
-      color: $color-link-active;
+      color: $color-text-2;
     }
   }
 }
