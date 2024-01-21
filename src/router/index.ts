@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         name: 'BusStops',
-        path: '/bus-stops',
+        path: '/stops',
         component: () => import('@/views/BusStopsView.vue'),
       },
       {

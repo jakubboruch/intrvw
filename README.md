@@ -23,6 +23,7 @@
 1. `npm install` - install dependencies
 2. `npm run api` - run the API
 3. `npm run serve` - for the Vue application
+4. `npm run test:unit` - to run unit tests
 
 ## Assignment
 1. You have to implement simple board for bus stops according to the User Stories and corresponding designs

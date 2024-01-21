@@ -12,7 +12,7 @@ const loading = computed(() => store.state.loading);
 const error = computed(() => store.state.error);
 const menu: IMenuItem[] = [
   { name: TEXTS.BUS_LINES, path: '/bus-lines' },
-  { name: TEXTS.STOPS, path: '/bus-stops' }
+  { name: TEXTS.STOPS, path: '/stops' }
 ];
 
 store.dispatch('getStopsFromApi');
